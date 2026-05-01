@@ -16,6 +16,8 @@ CREATE TABLE produk (
     nama_produk VARCHAR(150) NOT NULL,
     harga DECIMAL(12,2) NOT NULL,
     deskripsi TEXT NOT NULL,
+    foto VARCHAR(255) NOT NULL DEFAULT '',
+    link_foto VARCHAR(255) NOT NULL DEFAULT '',
     CONSTRAINT fk_produk_kategori
         FOREIGN KEY (kategori_id) REFERENCES kategori(id)
         ON UPDATE CASCADE
@@ -41,11 +43,11 @@ INSERT INTO kategori (nama_kategori) VALUES
 ('Preset'),
 ('Mini Course');
 
-INSERT INTO produk (kategori_id, nama_produk, harga, deskripsi) VALUES
-(1, 'E-book Digital Marketing', 55000, 'Panduan strategi pemasaran digital untuk pemula.'),
-(2, 'Template Landing Page', 85000, 'Template website landing page sederhana dan responsif.'),
-(3, 'Preset Lightroom Clean Tone', 35000, 'Preset editing foto untuk tampilan clean dan modern.'),
-(4, 'Mini Course PHP Native', 120000, 'Materi belajar PHP Native, CRUD, OOP, dan MVC sederhana.');
+INSERT INTO produk (kategori_id, nama_produk, harga, deskripsi, foto, link_foto) VALUES
+(1, 'E-book Digital Marketing', 55000, 'Panduan strategi pemasaran digital untuk pemula.', '', ''),
+(2, 'Template Landing Page', 85000, 'Template website landing page sederhana dan responsif.', '', ''),
+(3, 'Preset Lightroom Clean Tone', 35000, 'Preset editing foto untuk tampilan clean dan modern.', '', ''),
+(4, 'Mini Course PHP Native', 120000, 'Materi belajar PHP Native, CRUD, OOP, dan MVC sederhana.', '', '');
 
 INSERT INTO pesanan (nama_pembeli, email, produk_id, total, status) VALUES
 ('Alya Putri', 'alya@example.com', 1, 55000, 'Menunggu Pembayaran'),

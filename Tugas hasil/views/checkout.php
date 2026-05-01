@@ -15,6 +15,22 @@
         <div class="card border-0 shadow-sm mx-auto" style="max-width:720px">
             <div class="card-body p-4">
                 <h2 class="fw-bold">Checkout Produk</h2>
+                <?php
+                $imgSrc = '';
+                if (!empty($produk['foto']) && file_exists(__DIR__ . '/../Asset/uploads/' . $produk['foto'])) {
+                    $imgSrc = 'Asset/uploads/' . $produk['foto'];
+                } elseif (!empty($produk['link_foto'])) {
+                    $imgSrc = $produk['link_foto'];
+                }
+                $hasFoto = $imgSrc !== '';
+                ?>
+                <?php if ($hasFoto): ?>
+                    <img src="<?= e($imgSrc); ?>" alt="<?= e($produk['nama_produk']); ?>" class="img-fluid rounded mb-3" style="max-height:240px; object-fit:cover; width:100%;">
+                <?php else: ?>
+                    <div class="bg-light border rounded text-secondary fw-semibold d-flex align-items-center justify-content-center mb-3" style="height:240px;">
+                        Tidak ada foto
+                    </div>
+                <?php endif; ?>
                 <p class="mb-1"><strong>Produk:</strong> <?= e($produk['nama_produk']); ?></p>
                 <p><strong>Harga:</strong> <?= rupiah($produk['harga']); ?></p>
                 <form method="post" action="index.php?page=pesanan&action=proses">

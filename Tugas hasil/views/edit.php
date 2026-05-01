@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -8,14 +13,14 @@
 </head>
 <body class="bg-light">
 <main class="container py-5">
-    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" onclick="history.back()">Back</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" onclick="if(document.referrer !== '') { history.back(); } else { window.location.href='index.php'; }">Back</button>
     <?php if (!$data): ?>
         <div class="alert alert-warning">Produk tidak ditemukan.</div>
     <?php else: ?>
         <div class="card border-0 shadow-sm mx-auto" style="max-width:720px">
             <div class="card-body p-4">
                 <h2 class="fw-bold mb-3">Edit Produk</h2>
-                <form method="post" action="index.php?page=produk&action=update">
+                <form method="post" action="index.php?page=produk&action=update" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= $data['id']; ?>">
                     <div class="mb-3">
                         <label class="form-label">Nama Produk</label>
@@ -38,6 +43,19 @@
                     <div class="mb-3">
                         <label class="form-label">Deskripsi</label>
                         <textarea class="form-control" name="deskripsi" rows="4" required><?= e($data['deskripsi']); ?></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Foto Produk</label>
+                        <input class="form-control" type="file" name="foto" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                        <?php if (!empty($data['foto']) && $data['foto'] !== 'default.jpg'): ?>
+                            <img src="Asset/uploads/<?= e($data['foto']); ?>" alt="Foto Produk" class="img-fluid rounded mt-2" style="max-width:160px;">
+                        <?php endif; ?>
+                        <div class="form-text">Format jpg, png, atau webp. Maksimal 2MB.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Link Foto</label>
+                        <input class="form-control" type="url" name="link_foto" value="<?= e($data['link_foto'] ?? ''); ?>" placeholder="https://example.com/foto-produk.jpg">
+                        <div class="form-text">Opsional. Dipakai jika tidak upload file foto.</div>
                     </div>
                     <button class="btn btn-primary">Update</button>
                     <a class="btn btn-secondary" href="index.php?page=produk">Batal</a>

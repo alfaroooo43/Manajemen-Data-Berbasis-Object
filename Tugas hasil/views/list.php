@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -11,7 +16,7 @@
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php">Produk Digital</a>
         <div class="d-flex gap-2">
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="history.back()">Back</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="if(document.referrer !== '') { history.back(); } else { window.location.href='index.php'; }">Back</button>
             <a class="btn btn-success btn-sm" href="index.php?page=produk&action=tambah">Tambah Produk</a>
         </div>
     </div>
@@ -24,6 +29,7 @@
             <table class="table table-striped align-middle mb-0">
                 <tr>
                     <th>No</th>
+                    <th>Foto</th>
                     <th>Nama Produk</th>
                     <th>Kategori</th>
                     <th>Harga</th>
@@ -31,8 +37,24 @@
                     <th>Aksi</th>
                 </tr>
                 <?php $no = 1; while ($row = $produk->fetch_assoc()): ?>
+                    <?php
+                    $imgSrc = '';
+                    if (!empty($row['foto']) && file_exists(__DIR__ . '/../Asset/uploads/' . $row['foto'])) {
+                        $imgSrc = 'Asset/uploads/' . $row['foto'];
+                    } elseif (!empty($row['link_foto'])) {
+                        $imgSrc = $row['link_foto'];
+                    }
+                    $hasFoto = $imgSrc !== '';
+                    ?>
                     <tr>
                         <td><?= $no++; ?></td>
+                        <td>
+                            <?php if ($hasFoto): ?>
+                                <img src="<?= e($imgSrc); ?>" alt="<?= e($row['nama_produk']); ?>" width="80" height="60" class="rounded" style="object-fit:cover;">
+                            <?php else: ?>
+                                <span class="badge text-bg-secondary">Tidak ada foto</span>
+                            <?php endif; ?>
+                        </td>
                         <td><?= e($row['nama_produk']); ?></td>
                         <td><?= e($row['nama_kategori']); ?></td>
                         <td><?= rupiah($row['harga']); ?></td>
