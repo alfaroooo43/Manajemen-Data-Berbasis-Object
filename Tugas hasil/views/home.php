@@ -9,7 +9,7 @@
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg bg-white border-bottom">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.php">Produk Digital</a>
+        <a class="navbar-brand fw-bold" href="index.php">Produk Digital Store</a>
         <div class="d-flex gap-2">
             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="history.back()">Back</button>
             <a class="btn btn-primary btn-sm" href="index.php?page=produk">Data Produk</a>
@@ -20,7 +20,7 @@
 <section class="bg-primary text-white py-5">
     <div class="container">
         <h1 class="fw-bold">Sistem Penjualan Produk Digital</h1>
-        <p class="lead mb-0">Project PHP Native berbasis PBO/OOP dan MVC sederhana untuk tugas kampus.</p>
+        <p class="lead mb-0">Project PHP Native berbasis PBO/OOP dan MVC sederhana by all</p>
     </div>
 </section>
 
